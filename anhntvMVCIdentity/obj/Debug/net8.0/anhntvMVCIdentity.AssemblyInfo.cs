@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("anhntvMVCIdentity")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b52c5806c4c91b00fef9c3320199064f10b0da31")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+38c7a28920ba3bbf8185c4418b76f87ff90a943e")]
 [assembly: System.Reflection.AssemblyProductAttribute("anhntvMVCIdentity")]
 [assembly: System.Reflection.AssemblyTitleAttribute("anhntvMVCIdentity")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -264,3 +264,7 @@ D:\BTS\anhntvMVCIdentity\obj\Debug\net8.0\refint\anhntvMVCIdentity.dll
 D:\BTS\anhntvMVCIdentity\obj\Debug\net8.0\anhntvMVCIdentity.pdb
 D:\BTS\anhntvMVCIdentity\obj\Debug\net8.0\anhntvMVCIdentity.genruntimeconfig.cache
 D:\BTS\anhntvMVCIdentity\obj\Debug\net8.0\ref\anhntvMVCIdentity.dll
+D:\BTS\anhntvMVCIdentity\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+D:\BTS\anhntvMVCIdentity\bin\Debug\net8.0\MailKit.dll
+D:\BTS\anhntvMVCIdentity\bin\Debug\net8.0\MimeKit.dll
+D:\BTS\anhntvMVCIdentity\bin\Debug\net8.0\Bogus.dll
