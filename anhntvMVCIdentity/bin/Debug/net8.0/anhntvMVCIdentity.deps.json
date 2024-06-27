@@ -10,6 +10,7 @@
         "dependencies": {
           "Bogus": "35.5.1",
           "MailKit": "4.6.0",
+          "Microsoft.AspNetCore.Authentication.Google": "8.0.6",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "8.0.6",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.6",
           "Microsoft.AspNetCore.Identity.UI": "8.0.6",
@@ -586,6 +587,14 @@
           "lib/net8.0/MailKit.dll": {
             "assemblyVersion": "4.6.0.0",
             "fileVersion": "4.6.0.0"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.Google/8.0.6": {
+        "runtime": {
+          "lib/net8.0/Microsoft.AspNetCore.Authentication.Google.dll": {
+            "assemblyVersion": "8.0.6.0",
+            "fileVersion": "8.0.624.26909"
           }
         }
       },
@@ -2262,6 +2271,13 @@
       "sha512": "sha512-EJ1L2AtoO9nGZz2AKl2WGGw4pLIpkgEwzpczmZWBLqX0m33ueVA+CJYd9hg52XOvvEj+w5PVzB7yy26E0WHzKQ==",
       "path": "mailkit/4.6.0",
       "hashPath": "mailkit.4.6.0.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Authentication.Google/8.0.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-aOMroouD9EiSTduJYtN6PnqaQpbscr+3f8osFg/mGW5L6Cg8Igv9P93NLHqyBYvMilXEufgx5kK/5naxnw9VpA==",
+      "path": "microsoft.aspnetcore.authentication.google/8.0.6",
+      "hashPath": "microsoft.aspnetcore.authentication.google.8.0.6.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Cryptography.Internal/8.0.6": {
       "type": "package",

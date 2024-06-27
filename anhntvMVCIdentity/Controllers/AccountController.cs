@@ -4,8 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using anhntvMVCIdentity.Models;
 using anhntvMVCIdentity.Models.ViewModels;
 using anhntvMVCIdentity.Models.Entities;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using anhntvMVCIdentity.Models.Process;
 namespace anhntvMVCIdentity.Controllers
 {
+
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -15,6 +19,8 @@ namespace anhntvMVCIdentity.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
         }
+
+           [Authorize(Policy = nameof(SystemPermissions.AccountView))]
         public async Task<ActionResult> Index()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -28,6 +34,7 @@ namespace anhntvMVCIdentity.Controllers
 
             return View(usersWithRoles);
         }
+           [Authorize(Policy = nameof(SystemPermissions.AssignRole))]
           public async Task<IActionResult> AssignRole(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -45,8 +52,29 @@ namespace anhntvMVCIdentity.Controllers
             };
             return View(viewModel);
         }
+           [Authorize(Policy = nameof(SystemPermissions.AddClaim))]
+            public async Task<IActionResult> AddClaim(string userId)
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                var userClaims = await _userManager.GetClaimsAsync(user);
+                var model = new UserClaimVM(userId, user.UserName, userClaims.ToList());
+                return View(model);                
+            }
+            [HttpPost]
+              [Authorize(Policy = nameof(SystemPermissions.AddClaim))]
+            public async Task<IActionResult> AddClaim(string userId, string claimType, string claimValue)
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                var result = await _userManager.AddClaimAsync(user, new Claim(claimType, claimValue));
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("AddClaim", new {userId});
+                }
+                return View();
+            }
         [HttpPost]
-           public async Task<IActionResult> AssignRole(AssignRoleVM model)
+           [Authorize(Policy = nameof(SystemPermissions.AssignRole))]
+                   public async Task<IActionResult> AssignRole(AssignRoleVM model)
         {
             if (ModelState.IsValid)
             {

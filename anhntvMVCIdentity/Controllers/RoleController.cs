@@ -1,4 +1,7 @@
+using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
+using anhntvMVCIdentity.Models.Process;
+using anhntvMVCIdentity.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -51,8 +54,89 @@ public class RoleController : Controller
             await _roleManager.UpdateAsync(role);
             return RedirectToAction("Index");
         }
+          public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+           var role = await _roleManager.FindByIdAsync(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            return View(role);
+        }
+            public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+           var role = await _roleManager.FindByIdAsync(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            return View(role);
+        }
+         [Authorize(Policy = nameof(SystemPermissions.AssignClaim))]
+        public async Task<IActionResult> AssignClaim(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+            if (role == null)
+            { return BadRequest(); }
+            var allPermissions = Enum.GetValues(typeof(SystemPermissions)).Cast<SystemPermissions>().Select(p => p.ToString()).ToList();
+            var roleClaims = await _roleManager.GetClaimsAsync(role);
+            if (roleClaims == null)
+            {
+                roleClaims = new List<Claim>();
+            }
+            var model = new RoleClaimVM
+            {
+                RoleId = role.Id,
+                RoleName = role.Name,
+                Claims = allPermissions.Select(p => new RoleClaim
+                {
+                    Type = "Permission",
+                    Value = p,
+                    Selected = roleClaims.Any(c => c.Type == "Permission" && c.Value == p)
+                }).ToList()
+            };
+            return View(model);
+        }
+        [Authorize(Policy = nameof(SystemPermissions.AssignClaim))]
         [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AssignClaim(RoleClaimVM model)
+        {
+            if (!ModelState.IsValid)
+            { return View(model); }
+            var role = await _roleManager.FindByIdAsync(model.RoleId);
+            if (role == null)
+            { return BadRequest(); }
+            var claims = await _roleManager.GetClaimsAsync(role);
+            if (claims == null)
+            {
+                claims = new List<Claim>();
+            }
+            foreach (var claim in claims.Where(c => c.Type == "Permission"))
+            {
+                await _roleManager.RemoveClaimAsync(role, claim);
+            }
+            foreach (var claim in model.Claims.Where(c => c.Selected))
+            {
+                await _roleManager.AddClaimAsync(role, new Claim(claim.Type, claim.Value));
+            }
+            return RedirectToAction(nameof(Index));
+        }
+    
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfim(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
             if (role != null)

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\BTS\\anhntvMVCIdentity\\anhntvMVCIdentity.csproj": {}
+    "D:\\BTS\\anhntvMVCIdentity\\anhntvMVCIdentity.csproj": {}
   },
   "projects": {
-    "d:\\BTS\\anhntvMVCIdentity\\anhntvMVCIdentity.csproj": {
+    "D:\\BTS\\anhntvMVCIdentity\\anhntvMVCIdentity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\BTS\\anhntvMVCIdentity\\anhntvMVCIdentity.csproj",
+        "projectUniqueName": "D:\\BTS\\anhntvMVCIdentity\\anhntvMVCIdentity.csproj",
         "projectName": "anhntvMVCIdentity",
-        "projectPath": "d:\\BTS\\anhntvMVCIdentity\\anhntvMVCIdentity.csproj",
+        "projectPath": "D:\\BTS\\anhntvMVCIdentity\\anhntvMVCIdentity.csproj",
         "packagesPath": "C:\\Users\\Viettel\\.nuget\\packages\\",
-        "outputPath": "d:\\BTS\\anhntvMVCIdentity\\obj\\",
+        "outputPath": "D:\\BTS\\anhntvMVCIdentity\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Viettel\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -50,6 +50,10 @@
             "MailKit": {
               "target": "Package",
               "version": "[4.6.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[8.0.6, )"
             },
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",

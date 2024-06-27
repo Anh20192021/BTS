@@ -1,0 +1,14 @@
+using System.Security.Claims;
+
+public class UserClaimVM
+{
+    public string UserId {get ;set;}
+    public string Username {get ;set;}
+    public List<Claim> UserClaim {get ;set;}
+    public UserClaimVM(string userId, string userName, List<Claim> userClaims)
+    {
+        UserId = userId;
+        Username = userName;
+        userClaims = userClaims;
+    }
+}

@@ -268,3 +268,4 @@ D:\BTS\anhntvMVCIdentity\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
 D:\BTS\anhntvMVCIdentity\bin\Debug\net8.0\MailKit.dll
 D:\BTS\anhntvMVCIdentity\bin\Debug\net8.0\MimeKit.dll
 D:\BTS\anhntvMVCIdentity\bin\Debug\net8.0\Bogus.dll
+D:\BTS\anhntvMVCIdentity\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Google.dll

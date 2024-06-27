@@ -6,8 +6,10 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using anhntvMVCIdentity.Models.Process;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
+var Configuration = builder.Configuration;
 builder.Services.AddOptions();
 var mailSettings = builder.Configuration.GetSection("MailSettings");
 builder.Services.Configure<MailSettings>(mailSettings);
@@ -23,6 +25,22 @@ builder.Services.AddRazorPages();
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
+builder.Services.AddAuthentication().AddGoogle(googleOption =>
+{
+    googleOption.ClientId = Configuration["Authentication:Google:ClientId"];
+    googleOption.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+});
+ builder.Services.AddAuthorization(options =>
+        {
+            foreach (var permission in Enum.GetValues(typeof(SystemPermissions)).Cast<SystemPermissions>())
+            {
+                options.AddPolicy(permission.ToString(), policy =>
+                    policy.RequireClaim("Permission", permission.ToString()));
+            }
+         
+        });
+
+builder.Services.AddTransient<EmployeeSeeder>();
 builder.Services.Configure<IdentityOptions>(Options =>
 {
 Options.Lockout.DefaultLockoutTimeSpan =TimeSpan.FromMinutes(5);
@@ -37,21 +55,18 @@ Options.SignIn.RequireConfirmedEmail = false;
 Options.SignIn.RequireConfirmedPhoneNumber = false;
 Options.User.RequireUniqueEmail = true;
 });
-builder.Services.ConfigureApplicationCookie(Options =>
-{
-    Options.Cookie.HttpOnly = true;
-    Options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    Options.Cookie.SameSite = SameSiteMode.Lax;
-    Options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-    Options.LoginPath = "/Account/Login";
-    Options.AccessDeniedPath="/Account/AccessDenied";
-    Options.SlidingExpiration = true;
-});
+
 builder.Services.AddDataProtection()
 .PersistKeysToFileSystem(new DirectoryInfo(@"./keys"))
 .SetApplicationName("YourAppname")
 .SetDefaultKeyLifetime(TimeSpan.FromDays(14));
 builder.Services.AddTransient<EmployeeSeeder>();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = $"/Identity/Account/Login";
+    options.LogoutPath = $"/Identity/Account/Logout";
+    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+});
 var app = builder.Build();
 using (var scope = app.Services.CreateAsyncScope())
         {
